@@ -1,0 +1,113 @@
+The original tree is: 
+
+Inorder traversal: 1  12  12  15  15  17  18  20  22  26  27  
+
+Level 1: 17
+Level 2: 12 and 26
+Level 3: 1 and 12
+Level 4: 15
+Level 5: 15
+Level 3: 20 and 27
+Level 4: 18 and 22
+
+
+This tree contains 11 items 
+size of array/BST: 11
+17 
+12 
+1 
+12 
+15 
+15 
+26 
+20 
+18 
+22 
+27 
+ 
+creating new bst with non leaf's
+here is new bst with non leaf's
+12 12 15 17 20 26 
+
+The resulting tree after your function ran is: 
+Inorder traversal: 1  12  12  15  15  17  18  20  22  26  27  
+
+Level 1: 17
+Level 2: 12 and 26
+Level 3: 1 and 12
+Level 4: 15
+Level 5: 15
+Level 3: 20 and 27
+Level 4: 18 and 22
+
+
+This tree contains 11 items
+
+int table::copyToArray(int intArray[]) const
+{
+    int numberOfItems = 0;
+    helperOne(intArray, root, numberOfItems);
+    return numberOfItems;
+}
+
+void table::helperOne(int intArray[], node * curr, int & numberOfItems) const
+{
+    if(curr == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        intArray[numberOfItems] = curr->data;
+        numberOfItems++;
+        helperOne(intArray, curr->left, numberOfItems);
+        helperOne(intArray, curr->right, numberOfItems);
+    }
+}
+
+void table::copyNonLeaf(node *& newRoot)
+{
+    copyNonLeaf(root, newRoot);
+    return;
+}
+
+void table::copyNonLeaf(node * curr, node *& newRoot)
+{
+    if(curr)
+    {
+        if(newRoot == nullptr && (curr->left || curr->right))
+        {
+            newRoot = new node;
+            newRoot->data = curr->data;
+            newRoot->left = newRoot->right = nullptr;
+            copyNonLeaf(curr->left, newRoot->left);
+            copyNonLeaf(curr->right, newRoot->right);
+        }
+    }
+}
+
+void table::displayDuplicate(node * curr) const
+{
+    if(curr == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        displayDuplicate(curr->left);
+        cout << curr->data << " ";
+        displayDuplicate(curr->right);
+    }
+}
+
+void table::deleteList(node * curr)
+{
+    node * trash = curr;
+    if(curr->left){
+        deleteList(curr->left);
+    }
+    if(curr->right){
+        deleteList(curr->right);
+    }
+    delete trash;
+}
